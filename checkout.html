@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Finaliser l'achat</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Finaliser l'achat</h1>
+  </header>
+
+  <main>
+    <form id="checkout-form">
+      <label for="name">Nom complet :</label><br />
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="email">Email :</label><br />
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <label for="address">Adresse :</label><br />
+      <textarea id="address" name="address" rows="3" required></textarea><br /><br />
+
+      <button type="submit">Valider la commande</button>
+    </form>
+    <p id="confirmation-msg" style="color: green; margin-top: 15px;"></p>
+  </main>
+
+  <script src="javascript/checkout.js" defer></script>
+</body>
+</html>

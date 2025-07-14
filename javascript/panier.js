@@ -6,8 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeCartBtn = document.getElementById("close-cart-btn");
   const cartModal = document.getElementById("cart-modal");
 
+  function getCart() {
+    return JSON.parse(localStorage.getItem("cart")) || [];
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
   function renderCart() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = getCart();
+
     if (cart.length === 0) {
       cartContainer.innerHTML = "<p>Votre panier est vide.</p>";
       validateCartBtn.style.display = "none";
@@ -19,26 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
     validateCartBtn.style.display = "inline-block";
 
     const ul = document.createElement("ul");
+    let total = 0;
+
     cart.forEach(item => {
       const li = document.createElement("li");
       li.textContent = `${item.name} x${item.quantity} - ${(item.price * item.quantity).toFixed(2)} €`;
       ul.appendChild(li);
+      total += item.price * item.quantity;
     });
-
-    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     cartContainer.innerHTML = "";
     cartContainer.appendChild(ul);
 
     const totalEl = document.createElement("p");
     totalEl.style.fontWeight = "bold";
-    totalEl.textContent = `Total: ${total.toFixed(2)} €`;
+    totalEl.textContent = `Total : ${total.toFixed(2)} €`;
     cartContainer.appendChild(totalEl);
   }
 
   openCartBtn.addEventListener("click", () => {
-    cartModal.style.display = "flex";
     renderCart();
+    cartModal.style.display = "flex"; // ou 'block' selon ton CSS
   });
 
   closeCartBtn.addEventListener("click", () => {
@@ -47,15 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   clearCartBtn.addEventListener("click", () => {
     if (confirm("Voulez-vous vraiment vider le panier ?")) {
-      localStorage.removeItem("cart");
+      saveCart([]);
       renderCart();
     }
   });
 
   validateCartBtn.addEventListener("click", () => {
-    alert("Merci pour votre commande !");
-    localStorage.removeItem("cart");
-    renderCart();
-    cartModal.style.display = "none";
+    // Redirection vers la page de formulaire d'achat
+    window.location.href = "checkout.html";
   });
+
+  // Initialisation au chargement
+  renderCart();
 });
