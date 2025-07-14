@@ -62,3 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+  renderProducts(PRODUCTS);
+}
