@@ -74,4 +74,23 @@ const PRODUCTS = [
     image: "https://via.placeholder.com/150"
   
   },
+
+  {
+    id: 13,
+    name: "Table d'appoint",
+    price: 49.99,
+    image: "https://via.placeholder.com/150"
+  },
+  {
+    id: 14,
+    name: "Vase en céramique",
+    price: 29.99,
+    image: "https://via.placeholder.com/150"
+  },
+  {
+    id: 15,
+    name: "Plaid en laine",
+    price: 39.99,
+    image: "https://via.placeholder.com/150"
+  }    
 ];

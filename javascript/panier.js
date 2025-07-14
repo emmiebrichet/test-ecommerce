@@ -1,34 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const openCartBtn = document.getElementById("open-cart-btn");
-  const closeCartBtn = document.getElementById("close-cart-btn");
-  const cartModal = document.getElementById("cart-modal");
   const cartContainer = document.getElementById("cart-container");
   const validateCartBtn = document.getElementById("validate-cart");
   const clearCartBtn = document.getElementById("clear-cart");
-
-  const isLoggedIn = localStorage.getItem("user");
+  const openCartBtn = document.getElementById("open-cart-btn");
+  const closeCartBtn = document.getElementById("close-cart-btn");
+  const cartModal = document.getElementById("cart-modal");
 
   function renderCart() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     if (cart.length === 0) {
       cartContainer.innerHTML = "<p>Votre panier est vide.</p>";
       validateCartBtn.style.display = "none";
+      clearCartBtn.style.display = "none";
       return;
     }
 
-    let total = 0;
-    cartContainer.innerHTML = `
-      <ul>
-        ${cart.map(item => {
-          total += item.price * item.quantity;
-          return `<li>${item.name} x ${item.quantity} = ${(item.price * item.quantity).toFixed(2)} €</li>`;
-        }).join("")}
-      </ul>
-      <p><strong>Total : ${total.toFixed(2)} €</strong></p>
-    `;
+    clearCartBtn.style.display = "inline-block";
+    validateCartBtn.style.display = "inline-block";
 
-    if (isLoggedIn) validateCartBtn.style.display = "inline-block";
+    const ul = document.createElement("ul");
+    cart.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} x${item.quantity} - ${(item.price * item.quantity).toFixed(2)} €`;
+      ul.appendChild(li);
+    });
+
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    cartContainer.innerHTML = "";
+    cartContainer.appendChild(ul);
+
+    const totalEl = document.createElement("p");
+    totalEl.style.fontWeight = "bold";
+    totalEl.textContent = `Total: ${total.toFixed(2)} €`;
+    cartContainer.appendChild(totalEl);
   }
 
   openCartBtn.addEventListener("click", () => {
@@ -40,20 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
     cartModal.style.display = "none";
   });
 
-  cartModal.addEventListener("click", (e) => {
-    if (e.target === cartModal) {
-      cartModal.style.display = "none";
-    }
-  });
-
   clearCartBtn.addEventListener("click", () => {
-    localStorage.removeItem("cart");
-    renderCart();
+    if (confirm("Voulez-vous vraiment vider le panier ?")) {
+      localStorage.removeItem("cart");
+      renderCart();
+    }
   });
 
   validateCartBtn.addEventListener("click", () => {
     alert("Merci pour votre commande !");
     localStorage.removeItem("cart");
     renderCart();
+    cartModal.style.display = "none";
   });
 });
