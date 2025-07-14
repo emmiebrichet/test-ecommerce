@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accueil</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Ma Boutique</h1>
+    <nav>
+      <a href="login.html" id="login-link">Connexion</a>
+      <button id="logout-btn" style="display: none;">Déconnexion</button>
+    </nav>
+  </header>
+
+  <main style="display: flex; gap: 40px;">
+    <!-- Produits -->
+    <section style="flex: 2;">
+      <h2>Nos Produits</h2>
+      <div id="product-list"></div>
+      <div id="message-container" style="color: red; margin-bottom: 10px;"></div>
+    </section>
+
+    <!-- Bouton pour ouvrir la modale panier -->
+    <button id="open-cart-btn">🛒 Voir le panier</button>
+
+    <!-- Modale Panier -->
+    <div id="cart-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span id="close-cart-btn" class="close-btn">&times;</span>
+        <h2>🛒 Panier</h2>
+        <button id="clear-cart">Vider le panier</button>
+        <div id="cart-container">
+          <p>Votre panier est vide.</p>
+        </div>
+        <button id="validate-cart" style="margin-top: 10px; display: none;">Valider le panier</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="./javascript/data/produit.js"></script>
+  <script src="./javascript/home.js" defer></script>
+  <script src="./javascript/panier.js" defer></script>
+  <script src="./javascript/auth.js" defer></script>
+</body>
+</html>
